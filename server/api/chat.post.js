@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 	const req = await fetch(openai_url, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
 			Authorization: `Bearer ${config.OPENAI_API_KEY}` 
 		},
 		body: JSON.stringify({
