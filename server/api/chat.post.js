@@ -1,8 +1,6 @@
 export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig();
-	const bodyDate = await readBody(event);
-	const context = JSON.parse(bodyDate);
-	console.log(context);
+	const context = await readBody(event);
 	const { before_question } = context;
 	const { question } = context;
 	console.log(question);
@@ -21,7 +19,7 @@ export default defineEventHandler(async (event) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${config.OPENAI_API_KEY}` 
+			Authorization: `Bearer ${config.OPENAI_API_KEY}`
 		},
 		body: JSON.stringify({
 			model: 'gpt-3.5-turbo',
