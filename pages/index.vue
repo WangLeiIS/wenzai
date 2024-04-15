@@ -1,10 +1,13 @@
 <script setup>
   import { ref } from 'vue';
+  import { computed } from 'vue';
 	const loading = ref(false);
-  const inputMessage = ref('李白是谁？');
-  // todo 待删除
-  const prompt_position = ref([0,0])
-
+  const inputMessage = ref('{?李白是谁?}');
+  // const prompt_position = ref([0,0])
+  const cursorPosition = ref(0)
+  const startPosition = ref(0)
+  const startKey = '{?'
+  const endKey = '?}'
   const prompt = ref(
       {
         before_question: '',
@@ -13,23 +16,22 @@
       }
   );
 
-  const cursorPosition = ref(0)
 
   const updateCursorPosition = (e) => {
     cursorPosition.value = e.target.selectionStart
   }
+  // 激活copilot模式
   const copilotMode = computed(()=>{
     const copilotKeyWord = inputMessage.value.substring(cursorPosition.value-2,cursorPosition.value);
-    return copilotKeyWord.includes("::");
+    return copilotKeyWord.includes(endKey);
   });
   const submitContent = async () => {
     loading.value = true;
     // todo 建立中间变量context
-    prompt_position.value[1]=cursorPosition.value
-    prompt_position.value[0]=inputMessage.value.lastIndexOf("::",prompt_position.value[1]-3)
-    prompt.value.after_question = inputMessage.value.slice(prompt_position.value[1])
-    prompt.value.question = inputMessage.value.slice(prompt_position.value[0]+2, prompt_position.value[1]-2)
-    prompt.value.before_question = inputMessage.value.slice(0, prompt_position.value[0])
+    startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3)
+    prompt.value.after_question = inputMessage.value.slice(cursorPosition.value)
+    prompt.value.question = inputMessage.value.slice(startPosition.value+2, cursorPosition.value-2)
+    prompt.value.before_question = inputMessage.value.slice(0, startPosition.value)
     const err_answer = ":(我也不知道"
     const answer = await fetch(`/api/chat`, {
       body: JSON.stringify(prompt.value),
@@ -37,10 +39,10 @@
     });
     if (answer.status === 200) {
       const response = await answer.json();
-      inputMessage.value = prompt.value.before_question + "::" + prompt.value.question + "::" + "\n" + response?.message +  prompt.value.after_question
+      inputMessage.value = prompt.value.before_question + startKey + prompt.value.question + endKey + "\n" + response?.message +  prompt.value.after_question
     } else {
       console.error('HTTP error', answer.status)
-      inputMessage.value = prompt.value.before_question + "::" + prompt.value.question + "::" + "\n" + err_answer +  prompt.value.after_question
+      inputMessage.value = prompt.value.before_question + startKey + prompt.value.question + endKey + "\n" + err_answer +  prompt.value.after_question
     }
     loading.value = false;
   }
@@ -50,15 +52,15 @@
   <div class="p-4 m1-10 mr-auto" v-if="loading">
     <span class="loader"></span>
   </div>
+  <button :disabled="loading" v-if="copilotMode" @click="submitContent"
+          class="submitButton">
+    <img src="/submit.svg" alt="">
+  </button>
   <div class="editor">
     <textarea v-model="inputMessage"
               @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
     <p>{{cursorPosition}}</p>
-    <button :disabled="loading || !copilotMode" @click="submitContent"
-            class="submitButton">
-      <img src="/submit.svg" alt="">
-    </button>
   </div>
 </template>
 
