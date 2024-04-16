@@ -1,8 +1,8 @@
 <script setup>
   import { ref } from 'vue';
   import { computed } from 'vue';
-  import markdownit from 'markdown-it'
-  import hljs from 'highlight.js'
+  import markdown from 'markdown-it'
+  import hlJS from 'highlight.js'
   import { debounce } from 'lodash-es'
   import 'highlight.js/styles/github.css'
 	const loading = ref(false);
@@ -20,20 +20,20 @@
       }
   );
 
-  const md = markdownit({
+  const md = markdown({
     html: true,
     linkify: true,
     typographer: true,
     highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
+      if (lang && hlJS.getLanguage(lang)) {
         try {
-          return '<pre><code class="hljs">' +
-                 hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          return '<pre><code class="hlJS">' +
+                 hlJS.highlight(str, { language: lang, ignoreIllegals: true }).value +
                  '</code></pre>';
         } catch (__) {}
       }
 
-      return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
+      return '<pre><code class="hlJS">' + md.utils.escapeHtml(str) + '</code></pre>';
     }
   });
   const preview = computed(() => {
