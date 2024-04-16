@@ -4,6 +4,7 @@
   import markdownit from 'markdown-it'
   import hljs from 'highlight.js'
   import { debounce } from 'lodash-es'
+  import 'highlight.js/styles/github.css'
 	const loading = ref(false);
   const inputMessage = ref('{?李白是谁?}');
   const cursorPosition = ref(0)
@@ -143,7 +144,7 @@ body {
 .inputMessage {
   width: 50%;
   height: 80%;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
