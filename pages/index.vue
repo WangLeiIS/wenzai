@@ -6,7 +6,7 @@
   import { debounce } from 'lodash-es'
   import 'highlight.js/styles/github.css'
 	const loading = ref(false);
-  const inputMessage = ref('## hello');
+  const inputMessage = ref('{?如何写一篇好文章?}');
   const cursorPosition = ref(0)
   const startPosition = ref(0)
   const context_size = ref(200)
@@ -89,13 +89,12 @@
   </div>
   <button :disabled="!copilotMode" v-if="!loading" @click="submitContent"
           class="submitButton">
-    <img src="/submit.svg" alt="">
+    灵感
   </button>
   <div class="editor">
     <textarea v-model="inputMessage"
               @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
-    <p>{{cursorPosition}}</p>
   </div>
 </template>
 
@@ -137,14 +136,8 @@ body {
   height: 100vh;
 }
 
-.preview {
-  width: 50%;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
 .inputMessage {
-  width: 90%;
+  width: 95%;
   font-size: 1rem;
   padding: 1rem;
   resize: none;
@@ -153,7 +146,6 @@ body {
   outline: none;
   background-color: #f7fafc;
   overflow-y: auto;
-  border-right: 1px solid #e2e8f0;
 }
 .submitButton {
   display: flex;
@@ -163,7 +155,7 @@ body {
   height: 2.5rem; /* h-10 */
   margin-left: 0.5rem; /* ml-2 */
   background-color: #38a169; /* bg-green-500 */
-  border-radius: 9999px; /* rounded-full */
+  border-radius: 10px; /* rounded-full */
   cursor: pointer;
   pointer-events: all;
 }
