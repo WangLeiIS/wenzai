@@ -154,7 +154,7 @@ body {
   width: 2.5rem; /* w-10 */
   height: 2.5rem; /* h-10 */
   margin-left: 0.5rem; /* ml-2 */
-  background-color: #38a169; /* bg-green-500 */
+  background-color: powderblue; /* bg-green-500 */
   border-radius: 10px; /* rounded-full */
   cursor: pointer;
   pointer-events: all;
