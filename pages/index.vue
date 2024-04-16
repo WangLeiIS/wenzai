@@ -93,7 +93,7 @@
     答应
   </button>
   <p style="white-space: pre-line; font-size: 12px; color: gray;">
-    使用{?问题?}唤出答应
+    使用{?问题?}唤出答应，鼠标放在‘}’之后点击答应
   </p>
   </div>
   <div class="editor">
