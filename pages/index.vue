@@ -87,10 +87,15 @@
   <div class="p-4 m1-10 mr-auto" v-if="loading">
     <span class="loader"></span>
   </div>
-  <button :disabled="!copilotMode" v-if="!loading" @click="submitContent"
+  <div v-if="!loading" style="display: flex; align-items: center;gap:10px">
+  <button :disabled="!copilotMode"  @click="submitContent"
           class="submitButton">
     答应
   </button>
+  <p style="white-space: pre-line; font-size: 12px; color: gray;">
+    使用{?问题?}唤出答应
+  </p>
+  </div>
   <div class="editor">
     <textarea v-model="inputMessage"
               @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
