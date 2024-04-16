@@ -27,12 +27,11 @@
   });
   const submitContent = async () => {
     loading.value = true;
-    // todo 建立中间变量context
     startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3);
     if (cursorPosition.value - startPosition.value > context_size.value) return
     const orginStartPosition = ref(0);
     if (startPosition.value > context_size.value) orginStartPosition.value = startPosition.value - context_size.value;
-    const orginEndPositon = ref(0);
+    const orginEndPositon = ref(inputMessage.value.length);
     if (inputMessage.value.length -  cursorPosition.value > context_size.value ) orginEndPositon.value = cursorPosition.value + context_size.value;
     prompt.value.after_question = inputMessage.value.slice(cursorPosition.value, orginEndPositon.value)
     prompt.value.question = inputMessage.value.slice(startPosition.value, cursorPosition.value-2)
