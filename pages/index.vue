@@ -6,7 +6,7 @@
   import { debounce } from 'lodash-es'
   import 'highlight.js/styles/github.css'
 	const loading = ref(false);
-  const inputMessage = ref('{?李白是谁?}');
+  const inputMessage = ref('## hello');
   const cursorPosition = ref(0)
   const startPosition = ref(0)
   const context_size = ref(200)
@@ -21,6 +21,9 @@
   );
 
   const md = markdownit({
+    html: true,
+    linkify: true,
+    typographer: true,
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
@@ -143,13 +146,15 @@ body {
 
 .inputMessage {
   width: 50%;
-  height: 80%;
   font-size: 1rem;
   padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  resize: vertical;
+  resize: none;
   color: black;
+  border: none;
+  outline: none;
+  background-color: #f7fafc;
+  overflow-y: auto;
+  border-right: 1px solid #e2e8f0;
 }
 .submitButton {
   display: flex;
