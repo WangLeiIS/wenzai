@@ -1,6 +1,9 @@
 <script setup>
   import { ref } from 'vue';
   import { computed } from 'vue';
+  import markdownit from 'markdown-it'
+  import hljs from 'highlight.js'
+  import { debounce } from 'lodash-es'
 	const loading = ref(false);
   const inputMessage = ref('{?李白是谁?}');
   const cursorPosition = ref(0)
@@ -16,9 +19,33 @@
       }
   );
 
+  const md = markdownit({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return '<pre><code class="hljs">' +
+                 hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                 '</code></pre>';
+        } catch (__) {}
+      }
+
+      return '<pre><code class="hljs">' + md.utils.escapeHtml(str) + '</code></pre>';
+    }
+  });
+  const preview = computed(() => {
+    return md.render(inputMessage.value)
+  })
+
+  const updateInput = debounce((e) => {
+    inputMessage.value = e.target.value
+  }, 100)
 
   const updateCursorPosition = (e) => {
     cursorPosition.value = e.target.selectionStart
+  }
+  const handleInput = (e) => {
+    updateInput(e)
+    updateCursorPosition(e)
   }
   // 激活copilot模式
   const copilotMode = computed(()=>{
@@ -62,9 +89,10 @@
   </button>
   <div class="editor">
     <textarea v-model="inputMessage"
-              @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
+              @input="handleInput"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
     <p>{{cursorPosition}}</p>
+    <div class="preview" v-html="preview"></div>
   </div>
 </template>
 
@@ -106,8 +134,14 @@ body {
   height: 100vh;
 }
 
+.preview {
+  width: 50%;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
 .inputMessage {
-  width: 80%;
+  width: 50%;
   height: 80%;
   font-size: 1.5rem;
   padding: 1rem;
