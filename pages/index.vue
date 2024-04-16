@@ -89,7 +89,7 @@
   </div>
   <button :disabled="!copilotMode" v-if="!loading" @click="submitContent"
           class="submitButton">
-    灵感
+    答应
   </button>
   <div class="editor">
     <textarea v-model="inputMessage"
