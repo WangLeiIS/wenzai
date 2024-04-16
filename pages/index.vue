@@ -3,9 +3,9 @@
   import { computed } from 'vue';
 	const loading = ref(false);
   const inputMessage = ref('{?李白是谁?}');
-  // const prompt_position = ref([0,0])
   const cursorPosition = ref(0)
   const startPosition = ref(0)
+  const context_size = ref(200)
   const startKey = '{?'
   const endKey = '?}'
   const prompt = ref(
@@ -28,10 +28,15 @@
   const submitContent = async () => {
     loading.value = true;
     // todo 建立中间变量context
-    startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3)
-    prompt.value.after_question = inputMessage.value.slice(cursorPosition.value)
-    prompt.value.question = inputMessage.value.slice(startPosition.value+2, cursorPosition.value-2)
-    prompt.value.before_question = inputMessage.value.slice(0, startPosition.value)
+    startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3);
+    if (cursorPosition.value - startPosition.value > context_size.value) return
+    const orginStartPosition = ref(0);
+    if (startPosition.value > 0) orginStartPosition.value = startPosition.value - context_size.value;
+    const orginEndPositon = ref(0);
+    if (inputMessage.value.length -  cursorPosition.value > context_size.value ) orginEndPositon.value = cursorPosition.value + context_size.value;
+    prompt.value.after_question = inputMessage.value.slice(cursorPosition.value, orginEndPositon.value)
+    prompt.value.question = inputMessage.value.slice(startPosition.value, cursorPosition.value-2)
+    prompt.value.before_question = inputMessage.value.slice(orginStartPosition.value, startPosition.value)
     const err_answer = ":(我也不知道"
     const answer = await fetch(`/api/chat`, {
       body: JSON.stringify(prompt.value),
@@ -52,7 +57,7 @@
   <div class="p-4 m1-10 mr-auto" v-if="loading">
     <span class="loader"></span>
   </div>
-  <button :disabled="loading" v-if="copilotMode" @click="submitContent"
+  <button :disabled="!copilotMode" v-if="!loading" @click="submitContent"
           class="submitButton">
     <img src="/submit.svg" alt="">
   </button>
