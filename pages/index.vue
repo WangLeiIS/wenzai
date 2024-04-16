@@ -34,7 +34,7 @@
     const orginEndPositon = ref(inputMessage.value.length);
     if (inputMessage.value.length -  cursorPosition.value > context_size.value ) orginEndPositon.value = cursorPosition.value + context_size.value;
     prompt.value.after_question = inputMessage.value.slice(cursorPosition.value, orginEndPositon.value)
-    prompt.value.question = inputMessage.value.slice(startPosition.value, cursorPosition.value-2)
+    prompt.value.question = inputMessage.value.slice(startPosition.value+2, cursorPosition.value-2)
     prompt.value.before_question = inputMessage.value.slice(orginStartPosition.value, startPosition.value)
     const err_answer = ":(我也不知道"
     const answer = await fetch(`/api/chat`, {
