@@ -93,10 +93,9 @@
   </button>
   <div class="editor">
     <textarea v-model="inputMessage"
-              @input="handleInput"  @click="updateCursorPosition" @keyup="updateCursorPosition"
+              @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
     <p>{{cursorPosition}}</p>
-    <div class="preview" v-html="preview"></div>
   </div>
 </template>
 
@@ -145,7 +144,7 @@ body {
 }
 
 .inputMessage {
-  width: 50%;
+  width: 90%;
   font-size: 1rem;
   padding: 1rem;
   resize: none;
