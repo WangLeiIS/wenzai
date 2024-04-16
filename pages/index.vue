@@ -31,7 +31,7 @@
     startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3);
     if (cursorPosition.value - startPosition.value > context_size.value) return
     const orginStartPosition = ref(0);
-    if (startPosition.value > 0) orginStartPosition.value = startPosition.value - context_size.value;
+    if (startPosition.value > context_size.value) orginStartPosition.value = startPosition.value - context_size.value;
     const orginEndPositon = ref(0);
     if (inputMessage.value.length -  cursorPosition.value > context_size.value ) orginEndPositon.value = cursorPosition.value + context_size.value;
     prompt.value.after_question = inputMessage.value.slice(cursorPosition.value, orginEndPositon.value)
@@ -44,7 +44,7 @@
     });
     if (answer.status === 200) {
       const response = await answer.json();
-      inputMessage.value = prompt.value.before_question + startKey + prompt.value.question + endKey + "\n" + response?.message +  prompt.value.after_question
+      inputMessage.value =  inputMessage.value.slice(0,cursorPosition.value)+ "\n" + response?.message + inputMessage.value.slice(cursorPosition.value)
     } else {
       console.error('HTTP error', answer.status)
       inputMessage.value = prompt.value.before_question + startKey + prompt.value.question + endKey + "\n" + err_answer +  prompt.value.after_question
