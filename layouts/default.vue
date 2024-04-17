@@ -1,10 +1,18 @@
-<template>
-      <div class="flex items-center justify-between max-w-6xl mx-auto px-4">
-        <h1 class="flex flex-row items-center mr-2 font-semi bold text-primary text-2xl">
-          write copilot
-        </h1>
-      </div>
-	<div class="max-w-8xl min-h-screen p-8 mx-auto"><slot /></div>
-</template>
-<script setup lang="ts">
+<script setup>
+const route = useRoute()
+
+const links = [
+[{
+    label: '郁郁乎文哉',
+    labelClass: 'text-2xl font-semibold text-primary'
+  }]
+]
 </script>
+<template>
+  <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800" />
+
+  <div id="main" class="p-4 box-border overflow-auto" style="height: calc(100% - 61px)">
+    <slot />
+  </div>
+  <UNotifications />
+</template>

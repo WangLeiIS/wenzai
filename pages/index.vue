@@ -100,6 +100,7 @@
     <textarea v-model="inputMessage"
               @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
+    <div class="markdown-body preview" v-html="preview"></div>
   </div>
 </template>
 
@@ -138,11 +139,17 @@ body {
 
 .editor {
   display: flex;
-  height: 100vh;
+  height: 82vh;
+}
+
+.preview {
+  width: 50%;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
 .inputMessage {
-  width: 95%;
+  width: 50%;
   font-size: 1rem;
   padding: 1rem;
   resize: none;
@@ -151,6 +158,7 @@ body {
   outline: none;
   background-color: #f7fafc;
   overflow-y: auto;
+  border-right: 1px solid #e2e8f0;
 }
 .submitButton {
   display: flex;
