@@ -45,19 +45,19 @@
 }
   // 激活copilot模式
   const copilotMode = computed(()=>{
-    const copilotKeyWord = inputMessage.value.substring(cursorPosition.value-2,cursorPosition.value);
+    const copilotKeyWord = inputMessage.value.substring(cursorPosition.value-3,cursorPosition.value);
     return copilotKeyWord.includes(endKey);
   });
   const submitContent = async () => {
     loading.value = true;
-    startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-3);
+    startPosition.value=inputMessage.value.lastIndexOf(startKey,cursorPosition.value-4);
     if (cursorPosition.value - startPosition.value > context_size.value) return
     const orginStartPosition = ref(0);
     if (startPosition.value > context_size.value) orginStartPosition.value = startPosition.value - context_size.value;
     const orginEndPositon = ref(inputMessage.value.length);
     if (inputMessage.value.length -  cursorPosition.value > context_size.value ) orginEndPositon.value = cursorPosition.value + context_size.value;
     prompt.value.after_question = inputMessage.value.slice(cursorPosition.value, orginEndPositon.value)
-    prompt.value.question = inputMessage.value.slice(startPosition.value+2, cursorPosition.value-2)
+    prompt.value.question = inputMessage.value.slice(startPosition.value+4, cursorPosition.value-3)
     prompt.value.before_question = inputMessage.value.slice(orginStartPosition.value, startPosition.value)
     const err_answer = ":(我也不知道"
     const { data:answer, error } = await useFetch(`/api/chat`, {
