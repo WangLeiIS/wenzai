@@ -61,7 +61,7 @@
       body: JSON.stringify(prompt.value),
       method: 'post'
     });
-      inputMessage.value =  inputMessage.value.slice(0,cursorPosition.value)+ "\n" + answer.value + inputMessage.value.slice(cursorPosition.value)
+      inputMessage.value =  inputMessage.value.slice(0,cursorPosition.value)+ "\n" + answer.value.message + inputMessage.value.slice(cursorPosition.value)
     loading.value = false;
   }
 </script>
