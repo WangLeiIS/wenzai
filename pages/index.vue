@@ -6,12 +6,12 @@
   import { debounce } from 'lodash-es'
   import 'highlight.js/styles/github.css'
 	const loading = ref(false);
-  const inputMessage = ref('{?如何写一篇好文章?}');
+  const inputMessage = ref('');
   const cursorPosition = ref(0)
   const startPosition = ref(0)
   const context_size = ref(200)
-  const startKey = '{?'
-  const endKey = '?}'
+  const startKey = '<!--'
+  const endKey = '-->'
   const prompt = ref(
       {
         before_question: '',
@@ -40,6 +40,8 @@
   const updateCursorPosition = (e) => {
     cursorPosition.value = e.target.selectionStart
   }
+  const insertKey = (e) => {
+     inputMessage.value =  inputMessage.value.slice(0,cursorPosition.value)+ "\n" + startKey + “    ” + endKey + “\n” + inputMessage.value.slice(cursorPosition.value)
   // 激活copilot模式
   const copilotMode = computed(()=>{
     const copilotKeyWord = inputMessage.value.substring(cursorPosition.value-2,cursorPosition.value);
@@ -71,12 +73,14 @@
     <span class="loader"></span>
   </div>
   <div v-if="!loading" style="display: flex; align-items: center;gap:10px">
+  <button @click="insertKey" class="submitButton">
+    呼叫
+  </button>
   <button :disabled="!copilotMode"  @click="submitContent"
           class="submitButton">
     答应
   </button>
   <p style="white-space: pre-line; font-size: 12px; color: gray;">
-    使用{?问题?}唤出答应，鼠标放在‘}’之后点击答应
   </p>
   </div>
   <div class="editor">
