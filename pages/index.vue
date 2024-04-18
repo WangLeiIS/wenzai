@@ -10,6 +10,9 @@
   const cursorPosition = ref(0)
   const startPosition = ref(0)
   const context_size = ref(200)
+  const isContext = ref(true)
+  const models = ['gpt-3.5-turbo','gpt-3.5-turbo-16k-0613','gpt-3.5-turbo-1106']
+  const model = ref(models[0])
   const startKey = '<!--'
   const endKey = '-->'
   const prompt = ref(
@@ -71,9 +74,10 @@
 
 <template>
   <div  style="display: flex; align-items: center;gap:10px">
-
+    <USelect v-model="model" :options = "models" />
     <UButton @click="insertKey" label="call"/>
     <UButton :disabled="!copilotMode" :loading="loading" @click="submitContent" label="answer"/>
+    <UCheckbox v-model="isContext" color="lime" label="Context" disabled />
     <p style="white-space: pre-line; font-size: 12px; color: gray;"></p>
   </div>
   <div class="editor">
