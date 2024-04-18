@@ -6,7 +6,7 @@
   import { debounce } from 'lodash-es'
   import 'highlight.js/styles/github.css'
 	const loading = ref(false);
-  const inputMessage = ref('');
+  const inputMessage = ref('# Hello World\n');
   const cursorPosition = ref(0)
   const startPosition = ref(0)
   const context_size = ref(200)
@@ -70,19 +70,11 @@
 </script>
 
 <template>
-  <div class="p-4 m1-10 mr-auto" v-if="loading">
-    <span class="loader"></span>
-  </div>
-  <div v-if="!loading" style="display: flex; align-items: center;gap:10px">
-  <button @click="insertKey" class="submitButton">
-    呼叫
-  </button>
-  <button :disabled="!copilotMode"  @click="submitContent"
-          class="submitButton">
-    答应
-  </button>
-  <p style="white-space: pre-line; font-size: 12px; color: gray;">
-  </p>
+  <div  style="display: flex; align-items: center;gap:10px">
+
+    <UButton @click="insertKey" label="call"/>
+    <UButton :disabled="!copilotMode" :loading="loading" @click="submitContent" label="answer"/>
+    <p style="white-space: pre-line; font-size: 12px; color: gray;"></p>
   </div>
   <div class="editor">
     <textarea v-model="inputMessage"
@@ -96,34 +88,6 @@
 body {
   margin: 0;
 }
-
-.loader {
-  display: block;
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  position: relative;
-  color: #d3d3d3;
-  box-sizing: border-box;
-  animation: animloader 2s linear infinite;
-}
-
-@keyframes animloader {
-	0% {
-		box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-	}
-	25% {
-		box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
-	}
-	50% {
-		box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
-	}
-	75% {
-		box-shadow: 14px 0 0 2px, 38px 0 0 -2px;
-	}
-}
-
-
 
 .editor {
   display: flex;
@@ -148,21 +112,5 @@ body {
   overflow-y: auto;
   border-right: 1px solid #e2e8f0;
 }
-.submitButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem; /* w-10 */
-  height: 2.5rem; /* h-10 */
-  margin-left: 0.5rem; /* ml-2 */
-  background-color: powderblue; /* bg-green-500 */
-  border-radius: 10px; /* rounded-full */
-  cursor: pointer;
-  pointer-events: all;
-}
 
-.submitButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
 </style>
