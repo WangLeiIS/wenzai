@@ -42,6 +42,7 @@
   }
   const insertKey = (e) => {
      inputMessage.value =  inputMessage.value.slice(0,cursorPosition.value)+ "\n" + startKey + "    " + endKey + "\n" + inputMessage.value.slice(cursorPosition.value)
+}
   // 激活copilot模式
   const copilotMode = computed(()=>{
     const copilotKeyWord = inputMessage.value.substring(cursorPosition.value-2,cursorPosition.value);
