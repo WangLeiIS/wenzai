@@ -57,7 +57,7 @@
     prompt.value.question = inputMessage.value.slice(startPosition.value+2, cursorPosition.value-2)
     prompt.value.before_question = inputMessage.value.slice(orginStartPosition.value, startPosition.value)
     const err_answer = ":(我也不知道"
-    const answer = await fetch(`/api/chat`, {
+    const answer = await useFetch(`/api/chat`, {
       body: JSON.stringify(prompt.value),
       method: 'post'
     });
