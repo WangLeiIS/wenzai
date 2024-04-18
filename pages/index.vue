@@ -36,20 +36,9 @@
       return '<pre><code class="hlJS">' + md.utils.escapeHtml(str) + '</code></pre>';
     }
   });
-  const preview = computed(() => {
-    return md.render(inputMessage.value)
-  })
-
-  const updateInput = debounce((e) => {
-    inputMessage.value = e.target.value
-  }, 100)
 
   const updateCursorPosition = (e) => {
     cursorPosition.value = e.target.selectionStart
-  }
-  const handleInput = (e) => {
-    updateInput(e)
-    updateCursorPosition(e)
   }
   // 激活copilot模式
   const copilotMode = computed(()=>{
@@ -100,7 +89,7 @@
     <textarea v-model="inputMessage"
               @input="updateCursorPosition"  @click="updateCursorPosition" @keyup="updateCursorPosition"
               class="inputMessage"></textarea>
-    <div class="markdown-body preview" v-html="preview"></div>
+    <div class="markdown-body preview" v-html="md.render(inputMessage)"></div>
   </div>
 </template>
 
