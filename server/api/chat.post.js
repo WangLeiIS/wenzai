@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
 		+ "\n以上是这次的问题\n这是问题之后的内容\n"
 		+ after_question
 		+ "\n以上是问题之后的内容\n重申以便下面的是问题，你只需要回答下面的问题\n"
-		+ question;
+		+ question
+	    + "\n回答的格式为markdown\n";
 	const ollama_url =  'http://localhost:11434/v1/chat/completions'
 	const openai_url =  'https://api.openai.com/v1/chat/completions'
 	const req = await fetch(openai_url, {
