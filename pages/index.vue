@@ -1,6 +1,4 @@
-<script setup>
-import {usePreview} from "~/composables/states";
-
+<script setup lang="ts">
 const previewMode = usePreview()
 </script>
 
