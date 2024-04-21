@@ -6,16 +6,20 @@ const previewMode = usePreview()
 
 <template>
   <edit-toolbar />
-  <div class="flex bg-gray-100  m-2 p-3 gap-2 " style="height: calc(100% - 50px)">
-    <edit-textarea v-if="previewMode < 2 "/>
-    <preview v-if="previewMode > 0"/>
+  <div class="flex bg-gray-100  m-2 p-3 " style="height: calc(100% - 65px)">
+    <edit-textarea class="max-w-6xl  mx-auto" v-if="previewMode === 0"/>
+    <preview class="max-w-6xl  mx-auto" v-if="previewMode === 2"/>
+    <div class="flex w-full gap-2" v-if="previewMode === 1">
+      <edit-textarea class="w-1/2"/>
+      <preview class="w-1/2"/>
+    </div>
   </div>
 </template>
 
 <style>
 
 body {
-  height: 100%;
+  margin: 0;
 }
 
 </style>

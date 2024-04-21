@@ -24,7 +24,7 @@ const md = markdown({
 </script>
 
 <template>
-  <div class="flex-auto  overflow-y-auto max-w-6xl mx-auto  h-full">
+  <div class="flex-auto  overflow-y-auto h-full">
   <div class="markdown-body" v-html="md.render(inputMessage)"/>
   </div>
 </template>
