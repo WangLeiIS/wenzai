@@ -13,3 +13,5 @@ export const useInputMessage = () => useState<string>('inputMessage', () => '# H
 export const useIsSelect = () => useState<boolean>('isSelect', () => false)
 export const useIsCall = () => useState<boolean>('isCall', () => false)
 
+//preview
+export const usePreview = () => useState<number>('previewMode', () => 1)

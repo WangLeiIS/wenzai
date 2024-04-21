@@ -10,7 +10,7 @@ export default <Partial<Config>>{
       },
       colors: {
         muted: 'rgba(140, 140, 140, 0.9)',
-      }
+      },
     },
   },
 }

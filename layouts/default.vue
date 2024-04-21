@@ -10,7 +10,7 @@ const links = [
 </script>
 <template>
   <div class="border-b border-gray-200 dark:border-gray-700">
-    <div class="flex items-center justify-between max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between  px-4">
       <div>
          <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800" />
       </div>
@@ -19,7 +19,7 @@ const links = [
       </h1>
      </div>
 </div>
-  <div id="main" class="p-4 box-border overflow-auto" style="height: calc(100% - 61px)">
+  <div id="main" class="p-4 box-border overflow-auto" style="height: calc(100% - 62px)">
     <slot />
   </div>
   <UNotifications />

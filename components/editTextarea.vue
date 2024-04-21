@@ -15,9 +15,12 @@ const updateCursor = (e) => {
 </script>
 
 <template>
+  <div class="flex-auto  overflow-y-auto text-center max-w-6xl mx-auto h-full">
     <textarea v-model="inputMessage"
               @change="updateCursor"  @click="updateCursor"
               @keyup="updateCursor"  @keydown="updateCursor" @select="updateCursor"
-              class="inputMessage"></textarea>
+              class=" bg-white  shadow-md rounded-lg p-2 flex-auto font-medium
+              outline-none resize-none border-none w-full" style="height: calc(100% - 6px)"></textarea>
+    </div>
 </template>
 
