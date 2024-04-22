@@ -3,13 +3,13 @@ import {usePreview} from "~/composables/states";
 
 const previewMode = usePreview()
 const items = [{
-  label: 'edit',
+  title: 'edit',
   icon: 'i-heroicons-pencil-square',
 }, {
-  label: 'preview',
+  title: 'preview',
   icon: 'i-heroicons-eye',
 }, {
-  label: 'read',
+  title: 'read',
   icon: 'i-heroicons-book-open',
 }]
 

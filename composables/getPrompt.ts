@@ -4,13 +4,13 @@ export function getPrompt(inputMessage: string,
                           selectPosition: number) {
     let startKey = '<!--';
     let maxLen = 5000;
-    let prompt = {
+    let prompt  = {
         beforeQuestion: '',
         afterQuestion: '',
         question: '',
         model: '',
         MSG: ''
-    };
+    }
     let questionStart= 0;
     let questionEnd = 0;
     if (cursorPosition === selectPosition) {
@@ -36,5 +36,24 @@ export function getPrompt(inputMessage: string,
             prompt.afterQuestion = prompt.afterQuestion.slice(0, maxLen);
         }
     }
+    return prompt;
+}
+
+
+export function getQuestion(question: string)
+{
+    let maxQuestionLen = 5000;
+    let prompt = {
+        beforeQuestion: '',
+        afterQuestion: '',
+        question: '',
+        model: '',
+        MSG: ''
+    };
+    if (question.length > maxQuestionLen) {
+        prompt.MSG = 'The question is too long';
+        return prompt;
+    }else { prompt.question = question; }
+
     return prompt;
 }

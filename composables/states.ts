@@ -6,10 +6,12 @@ export const useModel = () => useState<string>('model', () => '')
 export const useIsLoading = () => useState<boolean>('isAnswer', () => false)
 export const useIsContext = () => useState<boolean>('isContext', () => false)
 
+
 //textarea
 export const useCursorPosition = () => useState<number>('cursorPosition', () => 0)
 export const useSelectPosition = () => useState<number>('selectPosition', () => 0)
 export const useInputMessage = () => useState<string>('inputMessage', () => '')
+export const useInputQuestion = () => useState<string>('inputQuestion', () => '')
 export const useIsSelect = () => useState<boolean>('isSelect', () => false)
 export const useIsCall = () => useState<boolean>('isCall', () => false)
 

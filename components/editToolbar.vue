@@ -1,11 +1,13 @@
 <script setup lang="ts">
 
-import {usePreview} from "~/composables/states";
+import {useInputQuestion, usePreview} from "~/composables/states";
 import PreviewToolbar from "~/components/previewToolbar.vue";
+import {getQuestion} from "~/composables/getPrompt";
 
 const cursorPosition = useCursorPosition()
 const selectPosition = useSelectPosition()
 const inputMessage = useInputMessage()
+const inputQuestion = useInputQuestion()
 
 const models = useModels()
 const model = useModel()
@@ -13,6 +15,7 @@ model.value = models.value[0]
 const isLoading = useIsLoading()
 const isContext = useIsContext()
 const isSelect = useIsSelect()
+const isCall = useIsCall()
 const previewMode = usePreview()
 
 const callKey = '\n <!--    --> \n'
@@ -32,12 +35,28 @@ const setContext = () => {
 
 
 const submitContent = async () => {
+  if (!isAnswer.value&&!isCall.value&&!isSelect.value) {
+    isCall.value = true
+    return
+  }
   let insertPosition = cursorPosition.value
   if (isSelect){
     insertPosition = selectPosition.value
   }
   isLoading.value = true
-  const prompt = getPrompt(inputMessage.value,isContext.value,cursorPosition.value, selectPosition.value)
+  let prompt  = {
+    beforeQuestion: '',
+    afterQuestion: '',
+    question: '',
+    model: '',
+    MSG: ''
+  }
+  if (isCall.value){
+    prompt = getQuestion(inputQuestion.value)
+    isCall.value = false
+    inputMessage.value =  insertText(inputQuestion.value, cursorPosition.value, inputMessage.value)
+    inputQuestion.value = ''
+  } else { prompt = getPrompt(inputMessage.value,isContext.value,cursorPosition.value, selectPosition.value) }
   if (prompt.MSG !== ''){
     inputMessage.value = insertText(prompt.MSG, insertPosition, inputMessage.value)
     isLoading.value = false
@@ -59,26 +78,23 @@ const submitContent = async () => {
 <template>
   <div class="grid grid-cols-2">
     <div   class="justify-self-start" style="display: flex; align-items: center;gap:10px">
-<!--    <UButton disabled @click="insertKey"-->
-<!--             icon="i-heroicons-arrow-right-end-on-rectangle"-->
-<!--             label="save"/>-->
-    <USelect :disabled="previewMode == 2" v-model="model" :options = "models" />
-    <UButton :disabled="previewMode == 2"
-             @click="insertKey"
-             icon="i-heroicons-arrow-right-end-on-rectangle"
-             label="call"/>
-    <UButton :disabled="!isAnswer&&!isSelect" :loading="isLoading"
-             @click="submitContent"
-             icon="i-heroicons-sparkles"
-             label="answer"/>
-    <UButton :disabled="previewMode == 2" v-if="!isContext"  @click="setContext"
+      <USelect :disabled="previewMode == 2" v-model="model" :options = "models" />
+      <UButton :disabled="previewMode == 2" v-if="!isContext"  @click="setContext"
              icon="i-heroicons-x-circle"
              color="gray"
-             variant="ghost"
-             label="Context"/>
-    <UButton :disabled="previewMode == 2" v-if="isContext"  @click="setContext"
+             variant="ghost" label="context"/>
+      <UButton :disabled="previewMode == 2" v-if="isContext"  @click="setContext"
              icon="i-heroicons-bars-3-bottom-left"
-             label="Context"/>
+             label="context"/>
+      <UButton :disabled="previewMode == 2" :loading="isLoading"
+               @click="submitContent"
+               icon="i-heroicons-sparkles"/>
+      <UModal v-model="isCall" :overlay="false" class="bg-opacity-0">
+        <div class="flex flex-row gap-2 ">
+          <UInput placeholder="asking..." class="w-full" v-model="inputQuestion" />
+          <UButton @click="submitContent" icon="i-heroicons-sparkles"/>
+        </div>
+      </UModal>
     <p style="white-space: pre-line; font-size: 12px; color: gray;"></p>
     </div>
     <div  class="justify-self-end">
