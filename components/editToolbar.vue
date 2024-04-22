@@ -43,6 +43,9 @@ const submitContent = async () => {
   if (isSelect){
     insertPosition = selectPosition.value
   }
+  if (isCall){
+    insertPosition = cursorPosition.value+inputQuestion.value.length
+  }
   isLoading.value = true
   let prompt  = {
     beforeQuestion: '',
@@ -67,7 +70,7 @@ const submitContent = async () => {
     body: JSON.stringify(prompt),
     method: 'post'
   });
-  const answerText = '\n'+ answer.value.message
+  const answerText = '\n'+ answer.value.message+ '\n'
   inputMessage.value = insertText(answerText, insertPosition, inputMessage.value)
   isLoading.value = false
 }
