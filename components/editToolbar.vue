@@ -40,13 +40,14 @@ const submitContent = async () => {
     return
   }
   let insertPosition = cursorPosition.value
-  if (isSelect){
+  if (isSelect.value){
     insertPosition = selectPosition.value
   }
-  if (isCall){
+  if (isCall.value){
     insertPosition = cursorPosition.value+inputQuestion.value.length
   }
   isLoading.value = true
+  isSelect.value = false
   let prompt  = {
     beforeQuestion: '',
     afterQuestion: '',
