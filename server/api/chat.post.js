@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
 	}
 	const ollama_url =  'http://localhost:11434/v1/chat/completions'
 	const openai_url =  'https://api.openai.com/v1/chat/completions'
-	const req = await fetch(openai_url, {
+	const burnhair_url =  'https://burn.hair/v1/chat/completions'
+	const req = await fetch(burnhair_url, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

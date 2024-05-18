@@ -1,5 +1,5 @@
 //model
-export const useModels = () => useState<string[]>('models', () => ['gpt-3.5-turbo','gpt-3.5-turbo-16k-0613','gpt-3.5-turbo-1106'])
+export const useModels = () => useState<string[]>('models', () => ['gpt-4o','gpt-3.5-turbo','gpt-4','gpt-4-turbo'])
 export const useModel = () => useState<string>('model', () => '')
 
 // toolbar
