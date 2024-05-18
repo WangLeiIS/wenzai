@@ -47,7 +47,6 @@ const submitContent = async () => {
     insertPosition = cursorPosition.value+inputQuestion.value.length
   }
   isLoading.value = true
-  isSelect.value = false
   let prompt  = {
     beforeQuestion: '',
     afterQuestion: '',
@@ -74,6 +73,7 @@ const submitContent = async () => {
   const answerText = '\n'+ answer.value.message+ '\n'
   inputMessage.value = insertText(answerText, insertPosition, inputMessage.value)
   isLoading.value = false
+  isSelect.value = false
 }
 
 
